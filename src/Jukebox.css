@@ -1,0 +1,26 @@
+body {
+    background-color: #0d1117;
+}
+div {    
+    background-color: #30363d;
+    color: #f0f6fc;
+    width: max-content;
+    padding: 10px;
+    margin: auto;
+}
+fieldset {
+    padding: 10px;
+}
+legend {
+    text-align: left;
+}
+button {
+    background-color: #238636;
+    color: #ffffff;
+    padding: 5px;
+    margin: 5px;
+    width:max-content;
+}
+input > range {
+    background-color: #a5d6ff;
+}
