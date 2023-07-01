@@ -19,21 +19,18 @@ export default class AudioPlayer extends Component {
     
     this.setState({
       currentAudioURL: this.props.audioURL
-    })    
-    console.log('DidMount')
+    })        
   }
 
   componentDidUpdate() {
     if (this.props.audioURL === '') {
-      audioElement.pause()
-      console.log('DidUpdate: audio paused')
+      audioElement.pause()      
     } else if (this.props.audioURL !== this.state.currentAudioURL) {
         audioElement.src=this.props.audioURL        
         this.setState({          
           currentAudioURL: this.props.audioURL
 
-        })        
-        console.log("DidUpdate: AudioURL has been changed")
+        })                
     }    
     
     // Triggered when loadedData
@@ -48,8 +45,7 @@ export default class AudioPlayer extends Component {
     audioElement.onended = this.handleOnFinishSong    
   }
   
-  componentWillUnmount() {    
-    console.log('WillUnmount')
+  componentWillUnmount() {        
     audioElement.pause()
   }
 
@@ -89,13 +85,12 @@ export default class AudioPlayer extends Component {
       showingPlayingStatus: "Playing " + this.props.audioURL
     })
   }
-  handleOnFinishSong = () => {
-    console.log("stop")
+  handleOnFinishSong = () => {    
     this.showFinishedSong()
   }
   
   showFinishedSong = () => {
-    let newPlayingStatus = this.props.audioURL + "has stopped"
+    let newPlayingStatus = this.props.audioURL + " has stopped"
     this.setState({
       showingPlayingStatus: newPlayingStatus
     })
@@ -103,12 +98,10 @@ export default class AudioPlayer extends Component {
 
   handlePlayingTimeChange = (event) => {
     
-    let newPlayingTime = event.target.value
-    console.log("New Time: ", newPlayingTime)
+    let newPlayingTime = event.target.value    
     audioElement.currentTime = newPlayingTime
   }
-  render() {
-    audioElement.onended = function(){ this.setState({status: "stop"}) }
+  render() {    
     return (
       <div>
         <p>{this.state.showingPlayingStatus}</p>
