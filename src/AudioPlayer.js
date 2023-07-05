@@ -17,6 +17,7 @@ export default class AudioPlayer extends Component {
     audioElement.src=this.props.audioURL
     audioElement.autoplay = true
     
+    // Save current song to currentAudioURL when first mounted
     this.setState({
       currentAudioURL: this.props.audioURL
     })        
@@ -25,7 +26,7 @@ export default class AudioPlayer extends Component {
   componentDidUpdate() {
     if (this.props.audioURL === '') {
       audioElement.pause()      
-    } else if (this.props.audioURL !== this.state.currentAudioURL) {
+    } else if (this.props.audioURL !== this.state.currentAudioURL) { // Check if song has been changed
         audioElement.src=this.props.audioURL        
         this.setState({          
           currentAudioURL: this.props.audioURL
@@ -38,7 +39,8 @@ export default class AudioPlayer extends Component {
     // Triggered when duration change
     audioElement.ondurationchange = this.handleOnDurationChange
     //Triggered when timeupdate event
-    audioElement.addEventListener("timeupdate",(event)=> this.handleOnTimeUpdate())
+    // Alternatively, we can use audioElement.addEventListener("timeupdate",(event)=> this.handleOnTimeUpdate())
+    audioElement.ontimeupdate = this.handleOnTimeUpdate 
     // Triggered when playing song
     audioElement.onplaying = this.handleOnPlaying
     // Triggered when the song has finished
@@ -109,7 +111,7 @@ export default class AudioPlayer extends Component {
         <input type="range" 
               min={0} 
               max={this.state.duration} 
-              steop={0.1}
+              step={5}
               value={this.state.currentPlayingTime}
               onChange={this.handlePlayingTimeChange}
           />
