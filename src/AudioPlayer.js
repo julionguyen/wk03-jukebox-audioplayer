@@ -17,21 +17,13 @@ export default class AudioPlayer extends Component {
     audioElement.src=this.props.audioURL
     audioElement.autoplay = true
     
-    // Save current song to currentAudioURL when first mounted
-    this.setState({
-      currentAudioURL: this.props.audioURL
-    })        
   }
 
   componentDidUpdate() {
     if (this.props.audioURL === '') {
       audioElement.pause()      
-    } else if (this.props.audioURL !== this.state.currentAudioURL) { // Check if song has been changed
+    } else {
         audioElement.src=this.props.audioURL        
-        this.setState({          
-          currentAudioURL: this.props.audioURL
-
-        })                
     }    
     
     // Triggered when loadedData
