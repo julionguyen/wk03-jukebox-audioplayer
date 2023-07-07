@@ -16,6 +16,21 @@ export default class AudioPlayer extends Component {
     
     audioElement.src=this.props.audioURL
     audioElement.autoplay = true
+    this.onLoadingPreparation()
+  }
+
+  componentDidUpdate(prevProps) {
+    
+    if (this.props.audioURL === '') {
+      audioElement.pause()
+    } else if (this.props.audioURL !== prevProps.audioURL) { // Check if song has been changed
+        // Change the audio URL to new song
+        audioElement.src=this.props.audioURL
+        this.onLoadingPreparation()
+    }
+  }
+  
+  onLoadingPreparation() {
     // Triggered when loadedData
     audioElement.onloadedmetadata = this.handleOnLoadedMetaData
     // Triggered when duration change
@@ -28,28 +43,6 @@ export default class AudioPlayer extends Component {
     audioElement.onplaying = this.handleOnPlaying
     // Triggered when the song has finished
     audioElement.onended = this.handleOnFinishSong    
-  }
-
-  componentDidUpdate(prevProps) {
-    
-    if (this.props.audioURL === '') {
-      audioElement.pause()
-    } else if (this.props.audioURL !== prevProps.audioURL) { // Check if song has been changed
-        // Change the audio URL to new song
-        audioElement.src=this.props.audioURL
-        // Triggered when loadedData
-        audioElement.onloadedmetadata = this.handleOnLoadedMetaData
-        // Triggered when duration change
-        audioElement.ondurationchange = this.handleOnDurationChange
-        //Triggered when timeupdate event
-        // Alternatively, we can use 
-        audioElement.ontimeupdate = this.handleOnTimeUpdate
-        //audioElement.addEventListener("timeupdate",(event)=> this.handleOnTimeUpdate())
-        // Triggered when playing song
-        audioElement.onplaying = this.handleOnPlaying
-        // Triggered when the song has finished
-        audioElement.onended = this.handleOnFinishSong    
-    }
   }
   
   componentWillUnmount() {        
