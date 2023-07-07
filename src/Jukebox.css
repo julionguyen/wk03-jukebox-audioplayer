@@ -21,6 +21,3 @@ button {
     margin: 5px;
     width:max-content;
 }
-input > range {
-    background-color: #a5d6ff;
-}

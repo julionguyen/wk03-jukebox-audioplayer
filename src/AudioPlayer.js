@@ -16,27 +16,40 @@ export default class AudioPlayer extends Component {
     
     audioElement.src=this.props.audioURL
     audioElement.autoplay = true
-    
-  }
-
-  componentDidUpdate() {
-    if (this.props.audioURL === '') {
-      audioElement.pause()      
-    } else {
-        audioElement.src=this.props.audioURL        
-    }    
-    
     // Triggered when loadedData
     audioElement.onloadedmetadata = this.handleOnLoadedMetaData
     // Triggered when duration change
     audioElement.ondurationchange = this.handleOnDurationChange
     //Triggered when timeupdate event
-    // Alternatively, we can use audioElement.addEventListener("timeupdate",(event)=> this.handleOnTimeUpdate())
-    audioElement.ontimeupdate = this.handleOnTimeUpdate 
+    // Alternatively, we can use 
+    audioElement.ontimeupdate = this.handleOnTimeUpdate
+    //audioElement.addEventListener("timeupdate",(event)=> this.handleOnTimeUpdate())
     // Triggered when playing song
     audioElement.onplaying = this.handleOnPlaying
     // Triggered when the song has finished
     audioElement.onended = this.handleOnFinishSong    
+  }
+
+  componentDidUpdate(prevProps) {
+    
+    if (this.props.audioURL === '') {
+      audioElement.pause()
+    } else if (this.props.audioURL !== prevProps.audioURL) { // Check if song has been changed
+        // Change the audio URL to new song
+        audioElement.src=this.props.audioURL
+        // Triggered when loadedData
+        audioElement.onloadedmetadata = this.handleOnLoadedMetaData
+        // Triggered when duration change
+        audioElement.ondurationchange = this.handleOnDurationChange
+        //Triggered when timeupdate event
+        // Alternatively, we can use 
+        audioElement.ontimeupdate = this.handleOnTimeUpdate
+        //audioElement.addEventListener("timeupdate",(event)=> this.handleOnTimeUpdate())
+        // Triggered when playing song
+        audioElement.onplaying = this.handleOnPlaying
+        // Triggered when the song has finished
+        audioElement.onended = this.handleOnFinishSong    
+    }
   }
   
   componentWillUnmount() {        
@@ -59,6 +72,7 @@ export default class AudioPlayer extends Component {
     this.setState({
       currentPlayingTime: audioElement.currentTime,      
     })
+
   }
 
   handlePauseOrPlay = () => {
@@ -103,7 +117,7 @@ export default class AudioPlayer extends Component {
         <input type="range" 
               min={0} 
               max={this.state.duration} 
-              step={5}
+              step={1}
               value={this.state.currentPlayingTime}
               onChange={this.handlePlayingTimeChange}
           />
